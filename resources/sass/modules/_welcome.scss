@@ -1,0 +1,32 @@
+// WELCOME PAGE STYLES ===================
+// =======================================
+
+.welcome {
+  &--content {
+    margin: auto;
+  }
+
+  &--heading {
+    border-bottom: 1px solid $color-divider;
+    margin-top: -0.5em;
+    margin-bottom: 1.25em;
+    padding-bottom: 0.75em;
+  }
+
+  &--icon {
+    opacity: 0.2;
+  }
+
+  &--user {
+    margin: 10px 20px;
+
+    &:last-of-type {
+      margin-bottom: 2em;
+    }
+  }
+
+  .stream--container {
+    grid-row-start: initial !important;
+    grid-column-start: initial !important;
+  }
+}

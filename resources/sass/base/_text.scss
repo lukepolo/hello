@@ -1,0 +1,39 @@
+// TEXT STYLES ===========================
+// =======================================
+
+* {
+  box-sizing: border-box;
+}
+
+#app,
+html,
+body {
+  font-family: $font-body;
+  font-weight: 300;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-heading;
+  font-weight: 800;
+  color: $color-text-secondary;
+  letter-spacing: 0.5px;
+}
+
+h1 {
+  color: $color-text-primary;
+  text-transform: uppercase;
+}
+
+h5 {
+  letter-spacing: 0;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}

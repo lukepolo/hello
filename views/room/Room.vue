@@ -188,3 +188,33 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.meeting .host {
+  width: 300px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba($white, 0.1);
+  margin: 10px;
+  z-index: 100;
+}
+
+.viewers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: min-content;
+  grid-gap: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 10px;
+
+  .stream--container {
+    background-color: $color-background-inverse-contrast;
+    border-radius: 10px;
+    box-shadow: -4px -4px 7px rgba($color-text-inverse-primary, 0.07),
+      4px 4px 7px rgba($color-text-primary, 1);
+    overflow: hidden;
+  }
+}
+</style>

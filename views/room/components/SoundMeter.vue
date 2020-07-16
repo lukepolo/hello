@@ -59,3 +59,32 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.sound-meter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  min-height: 35px;
+
+  &--mirror {
+    transform: scale(1, -1);
+  }
+
+  &__dot {
+    margin: 0 2px;
+    min-height: 5px;
+    height: 5px;
+    width: 5px;
+    background-color: $green;
+    border-radius: 100em;
+    display: inline-block;
+    max-height: 10px;
+
+    &--large {
+      max-height: 15px;
+    }
+  }
+}
+</style>

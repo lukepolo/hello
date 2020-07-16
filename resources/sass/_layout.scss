@@ -1,0 +1,36 @@
+// LAYOUT ==================================================
+// =========================================================
+#app {
+  display: grid;
+}
+
+.welcome {
+  display: grid;
+  grid-template-columns: minmax(30vw, 650px) minmax(10vw, 400px);
+  align-items: center;
+  grid-gap: 40px;
+  margin: auto;
+  padding: 40px;
+}
+
+.meeting {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  grid-template-rows: min-content 1fr min-content;
+  background-color: $color-background-inverse;
+
+  .host {
+    grid-column-start: 2 !important;
+    grid-row-start: 1 !important;
+  }
+
+  .viewers {
+    grid-column-start: 1;
+    grid-column-end: -1;
+    grid-row-start: 1;
+    grid-row-end: -1;
+  }
+}

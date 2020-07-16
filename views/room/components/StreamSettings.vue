@@ -112,3 +112,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.stream-settings-container {
+  color: $black;
+  position: absolute;
+  bottom: 60px;
+  right: 25px;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: $white;
+}
+</style>

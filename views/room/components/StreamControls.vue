@@ -190,3 +190,67 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.stream--controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  color: $color-text-inverse-primary;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 8px 15px 10px;
+}
+
+.meeting .stream--controls-host {
+  position: initial;
+  grid-column-start: 1;
+  grid-column-end: -1;
+  grid-row-end: -1;
+}
+
+.controls {
+  &--group {
+    flex: 1 0 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:first-of-type {
+      justify-content: flex-start;
+    }
+    &:last-of-type {
+      justify-content: flex-end;
+    }
+  }
+
+  &--item {
+    padding: 10px;
+    border-radius: 100em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+
+    &:hover {
+      transition: all 0.3s ease;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    &-circle {
+      border: 1px solid $white;
+    }
+
+    &-large {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.icon-video-off,
+.icon-mic-off {
+  color: $color-state-danger;
+  border-color: $color-state-danger;
+}
+</style>

@@ -1,0 +1,44 @@
+// FORM STYLES ===========================
+// =======================================
+
+.form {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 20px;
+  align-items: center;
+
+  &--item {
+    display: contents;
+
+    label {
+      white-space: nowrap;
+      font-weight: 400;
+      font-size: 0.9em;
+      text-align: right;
+      color: $color-text-secondary;
+    }
+  }
+
+  &--buttons {
+    grid-column-start: 1;
+    grid-column-end: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5em;
+  }
+}
+
+input {
+  border: 2px solid $color-divider;
+  border-radius: 4px;
+  padding: 8px 10px;
+  letter-spacing: 0.4px;
+
+  &:active,
+  &:focus {
+    outline: none;
+    border-color: $color-state-primary;
+  }
+}

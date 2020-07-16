@@ -61,3 +61,36 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+video {
+  width: 100%;
+  display: block;
+}
+
+.welcome {
+  .stream {
+    border: 4px solid $color-divider;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+}
+
+.stream {
+  &--host {
+    transform: rotateY(180deg);
+  }
+
+  &--container {
+    position: relative;
+  }
+
+  &--overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+</style>
