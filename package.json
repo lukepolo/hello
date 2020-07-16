@@ -5,8 +5,8 @@
   "description": "Google Meet Clone",
   "private": true,
   "scripts": {
-    "web" : "npm run build -- --env.platform=web",
-    "web:watch" : "npm run dev-server -- --watch --env.platform=web",
+    "web": "npm run build -- --env.platform=web",
+    "web:watch": "npm run dev-server -- --env.platform=web",
     "app": "npm run build --env.platform=app && electron-builder",
     "app:watch": "concurrently \"npm run dev-server -- --env.platform=app\" \"wait-on http://localhost:8080/ && electron dist/main/main.js\"",
     "dev-server": "cross-env TS_NODE_PROJECT=\"node_modules/varie-bundler/webpack-tsconfig.json\" webpack-dev-server --env.mode=development --progress --hot",

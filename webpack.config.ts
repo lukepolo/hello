@@ -6,13 +6,9 @@ import VarieElectronMainProcessPlugin from "./varie-bundler-plugins/VarieElectro
 
 const config = dotnev.config().parsed;
 
-export default function({
-    mode,
-    platform,
-  }) {
-
+export default function({ mode, platform }) {
   let bundles = [];
-  if(platform === 'app') {
+  if (platform === "app") {
     let main = new WebBundler(mode, {
       bundleName: "main process",
       webpack: {
@@ -43,7 +39,7 @@ export default function({
       })
       .plugin(VarieElectronMainProcessPlugin);
 
-      bundles.push(...main.build())
+    bundles.push(...main.build());
   }
 
   let app = new WebBundler(mode, {
@@ -69,6 +65,9 @@ export default function({
       "signal-server": {
         host: config.SIGNAL_SERVER_HOST,
       },
+      app: {
+        platform,
+      },
     })
     .purgeCss(["app", "views", "node_modules/varie"])
     .globalSassIncludes("resources/sass/base/_variables.scss")
@@ -83,10 +82,12 @@ export default function({
           options.esModule = false;
           return options;
         });
+
+      config.node.set("fs", "empty");
     })
     .globalSassIncludes("resources/sass/global_variables.scss");
 
-  if(platform === 'app') {
+  if (platform === "app") {
     app.plugin(VarieElectronRendererPlugin);
   }
 
