@@ -32,7 +32,6 @@ export default class StreamController {
     @inject("ConfigService") configService,
     @inject("DeviceService") deviceService,
     @inject("BroadcastService") broadcastService,
-    @inject("RemoteControlService") remoteControlService,
     @inject("CameraCaptureService") cameraCaptureService,
   ) {
     this.deviceService = deviceService;

@@ -36,7 +36,9 @@ export default class AppProviderServiceProvider extends ServiceProvider {
     // STREAMING SERVICES
     this.app.bind("StreamController", StreamController);
     if ($config.get("app.platform") === "app") {
-      const RemoteControlService = import("@app/services/RemoteControlService");
+      const RemoteControlService = await import(
+        "@app/services/RemoteControlService"
+      );
       this.app.bind("RemoteControlService", RemoteControlService);
     }
     this.app.bind("RoomStreamingService", RoomStreamingService);
