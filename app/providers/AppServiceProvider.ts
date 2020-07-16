@@ -5,7 +5,6 @@ import StreamController from "@app/streams/StreamController";
 import BroadcastService from "@app/services/BroadcastService";
 import DummyCaptureService from "@app/services/DummyCaptureService";
 import CameraCaptureService from "@app/services/CameraCaptureService";
-import RemoteControlService from "@app/services/RemoteControlService";
 import RoomStreamingService from "@app/services/RoomStreamingService";
 import DesktopCaptureService from "@app/services/DesktopCaptureService";
 import OperationSystemService from "@app/services/OperationSystemService";
@@ -36,7 +35,12 @@ export default class AppProviderServiceProvider extends ServiceProvider {
 
     // STREAMING SERVICES
     this.app.bind("StreamController", StreamController);
-    this.app.bind("RemoteControlService", RemoteControlService);
+    if ($config.get("app.platform") === "app") {
+      const RemoteControlService = await import(
+        "@app/services/RemoteControlService"
+      );
+      this.app.bind("RemoteControlService", RemoteControlService);
+    }
     this.app.bind("RoomStreamingService", RoomStreamingService);
 
     // CAPTURE SERVICES

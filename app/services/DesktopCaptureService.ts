@@ -3,8 +3,6 @@ import { DesktopCapturerSource } from "electron";
 import { DesktopSources } from "@app/types/DesktopSources";
 import { PLATFORMS } from "@app/services/OperationSystemService";
 
-const { desktopCapturer } = require("electron");
-
 // TODO - ask for permissions
 // https://www.electronjs.org/docs/api/system-preferences#systempreferencesgetmediaaccessstatusmediatype-macos
 
@@ -30,22 +28,27 @@ export default class DesktopCaptureService {
       screens: [],
     };
 
-    return desktopCapturer
-      .getSources({
-        types: ["window", "screen"],
-        fetchWindowIcons: true,
-        thumbnailSize,
-      })
-      .then((sources) => {
-        sources.forEach((source) => {
-          if (source.id.includes("window")) {
-            desktopSources.windows.push(source);
-          } else if (source.id.includes("screen")) {
-            desktopSources.screens.push(source);
-          }
+    if ($config.get("app.platform") === "app") {
+      const { desktopCapturer } = require("electron");
+      return desktopCapturer
+        .getSources({
+          types: ["window", "screen"],
+          fetchWindowIcons: true,
+          thumbnailSize,
+        })
+        .then((sources) => {
+          sources.forEach((source) => {
+            if (source.id.includes("window")) {
+              desktopSources.windows.push(source);
+            } else if (source.id.includes("screen")) {
+              desktopSources.screens.push(source);
+            }
+          });
+          return desktopSources;
         });
-        return desktopSources;
-      });
+    } else {
+      alert("web");
+    }
   }
 
   // TODO - running in browser

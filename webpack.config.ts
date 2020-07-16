@@ -6,38 +6,43 @@ import VarieElectronMainProcessPlugin from "./varie-bundler-plugins/VarieElectro
 
 const config = dotnev.config().parsed;
 
-export default function(env) {
-  let main = new WebBundler(env, {
-    bundleName: "main process",
-    webpack: {
-      devServer: {
-        open: false,
+export default function({ mode, platform }) {
+  let bundles = [];
+  if (platform === "app") {
+    let main = new WebBundler(mode, {
+      bundleName: "main process",
+      webpack: {
+        devServer: {
+          open: false,
+        },
       },
-    },
-    outputPath: path.join(__dirname, "dist/main"),
-  })
-    .entry("main", ["main"])
-    .aliases({
-      "@app": "app",
-      "@views": "views",
-      "@store": "store",
-      "@config": "config",
-      "@routes": "routes",
-      "@models": "app/models",
-      "@resources": "resources",
-      "@components": "app/components",
+      outputPath: path.join(__dirname, "dist/main"),
     })
-    // ROBOT.JS
-    .chainWebpack((config) => {
-      config.module
-        .rule("node-loader")
-        .test(/\.node$/)
-        .use("node-loader")
-        .loader("native-addon-loader");
-    })
-    .plugin(VarieElectronMainProcessPlugin);
+      .entry("main", ["main"])
+      .aliases({
+        "@app": "app",
+        "@views": "views",
+        "@store": "store",
+        "@config": "config",
+        "@routes": "routes",
+        "@models": "app/models",
+        "@resources": "resources",
+        "@components": "app/components",
+      })
+      // ROBOT.JS
+      .chainWebpack((config) => {
+        config.module
+          .rule("node-loader")
+          .test(/\.node$/)
+          .use("node-loader")
+          .loader("native-addon-loader");
+      })
+      .plugin(VarieElectronMainProcessPlugin);
 
-  let app = new WebBundler(env, {
+    bundles.push(...main.build());
+  }
+
+  let app = new WebBundler(mode, {
     bundleName: "app",
     vue: {
       runtimeOnly: false,
@@ -60,6 +65,9 @@ export default function(env) {
       "signal-server": {
         host: config.SIGNAL_SERVER_HOST,
       },
+      app: {
+        platform,
+      },
     })
     .purgeCss(["app", "views", "node_modules/varie"])
     .globalSassIncludes("resources/sass/base/_variables.scss")
@@ -74,9 +82,16 @@ export default function(env) {
           options.esModule = false;
           return options;
         });
-    })
-    .globalSassIncludes("resources/sass/global_variables.scss")
-    .plugin(VarieElectronRendererPlugin);
 
-  return [...main.build(), , ...app.build()];
+      config.node.set("fs", "empty");
+    })
+    .globalSassIncludes("resources/sass/global_variables.scss");
+
+  if (platform === "app") {
+    app.plugin(VarieElectronRendererPlugin);
+  }
+
+  bundles.push(...app.build());
+
+  return bundles;
 }

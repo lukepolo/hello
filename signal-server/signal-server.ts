@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import container from "./Container";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
@@ -15,7 +16,7 @@ container
   .migrate()
   .then(() => {
     container
-      .get<Server>(Bindings.Database)
+      .get<Server>(Bindings.SocketServer)
       .on("connection", (socket: Socket) => {
         container
           .get<ChatSocketEvents>(Bindings.ChatSocketEvents)
