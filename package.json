@@ -12,7 +12,7 @@
     "dev-server": "cross-env TS_NODE_PROJECT=\"node_modules/varie-bundler/webpack-tsconfig.json\" webpack-dev-server --env.mode=development --progress --hot",
     "build": "cross-env TS_NODE_PROJECT=\"node_modules/varie-bundler/webpack-tsconfig.json\" webpack --env.mode=production --no-progress --hide-modules",
     "signal": "tsc --p tsconfig-signal-server.json",
-    "signal:watch": "concurrently \"tsc --p tsconfig-signal-server.json -w\" \"nodemon --watch dist/signal-server.js dist/signal-server.js\" ",
+    "signal:watch": "concurrently \"tsc --p tsconfig-signal-server.json -w\" \"nodemon --watch dist/signal-server.js dist/signal-server/signal-server.js\" ",
     "rebuild": "electron-rebuild",
     "postinstall": "electron-builder install-app-deps"
   },
