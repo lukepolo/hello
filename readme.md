@@ -84,6 +84,10 @@ A fun project to use WebRTC and to use some different technologies.
 - [ ] Participant Activity
 - [ ] Meeting Summary
 
+### DevOps
+- [ ] Docker Compose File to Launch
+- [ ] Wiki for Running Docker Compose / Adding SSL Certs
+
 ## Known Bugs
 
 - Issue with OSX not being able to record sound from desktop (chromium limitation)
