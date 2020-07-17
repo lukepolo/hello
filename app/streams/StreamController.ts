@@ -38,10 +38,10 @@ export default class StreamController {
     this.broadcastService = broadcastService;
     this.cameraCaptureService = cameraCaptureService;
 
-    this.rtcConfiguration.iceServers = configService.get(
-      "rtc-settings.ice-servers",
-      [],
+    this.rtcConfiguration.iceServers = JSON.parse(
+      configService.get("rtc-settings.iceServers", "[]"),
     );
+
     // TODO - we have different stream types for a reason
     this.registerStreamListeners(StreamTypes.Broadcasting);
   }

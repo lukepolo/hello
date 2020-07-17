@@ -4,7 +4,7 @@ import { WebBundler } from "varie-bundler";
 import VarieElectronRendererPlugin from "./varie-bundler-plugins/VarieElectronRendererPlugin";
 import VarieElectronMainProcessPlugin from "./varie-bundler-plugins/VarieElectronMainProcessPlugin";
 
-const config = dotnev.config().parsed;
+const env = dotnev.config().parsed;
 
 export default function({ mode, platform }) {
   let bundles = [];
@@ -63,7 +63,10 @@ export default function({ mode, platform }) {
     .varieConfig({
       // @ts-ignore -- fix varie bundler
       "signal-server": {
-        host: config.SIGNAL_SERVER_HOST,
+        host: env.SIGNAL_SERVER_HOST,
+      },
+      "rtc-settings": {
+        iceServers: env.ICE_SERVERS,
       },
       app: {
         platform,
