@@ -72,7 +72,7 @@ A fun project to use WebRTC and to use some different technologies.
 
 ### Bundling
 
-- [ ] Web
+- [x] Web
 - [ ] OSX
 - [ ] Linux
 - [ ] Windows
@@ -85,6 +85,7 @@ A fun project to use WebRTC and to use some different technologies.
 - [ ] Meeting Summary
 
 ### DevOps
+
 - [ ] Docker Compose File to Launch
 - [ ] Wiki for Running Docker Compose / Adding SSL Certs
 
