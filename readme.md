@@ -16,7 +16,7 @@ A fun project to use WebRTC and to use some different technologies.
 ### Peer Connections
 
 - [x] Peer to Peer Connections
-- [ ] COTURN Server
+- [x] COTURN Server
 
 ### Video / Camera
 
