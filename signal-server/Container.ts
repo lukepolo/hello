@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import { Container } from "inversify";
 import Bindings from "./constants/Bindings";
@@ -10,6 +11,8 @@ import RemoteControlSocketEvents from "./socket-events/RemoteControlSocketEvents
 import RtcPeerConnectionSocketEvents from "./socket-events/RtcPeerConnectionSocketEvents";
 
 const container = new Container();
+
+container.bind(Bindings.ENV).toConstantValue(dotenv.config().parsed);
 
 container
   .bind<ChatSocketEvents>(Bindings.ChatSocketEvents)

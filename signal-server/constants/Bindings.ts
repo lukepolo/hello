@@ -1,4 +1,5 @@
 export default {
+  ENV: Symbol("ENV"),
   Database: Symbol("Database"),
   HttpServer: Symbol("HttpServer"),
   SocketServer: Symbol("SocketServer"),
