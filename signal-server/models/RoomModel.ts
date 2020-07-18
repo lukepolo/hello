@@ -1,4 +1,4 @@
-import Hashids from "hashids";
+import Hashing from "../Hashing";
 import { inject } from "inversify";
 import Model, { Table } from "./../Model";
 import { Room } from "../../app/types/Room";
@@ -6,17 +6,23 @@ import Bindings from "../constants/Bindings";
 
 @Table("rooms")
 export default class RoomModel extends Model<Room> {
-  private hashids;
+  protected hashing: Hashing;
 
-  constructor(@inject(Bindings.ENV) env, @inject(Bindings.Database) db) {
+  constructor(
+    @inject(Bindings.Hashing) hashing,
+    @inject(Bindings.Database) db,
+  ) {
     super(db);
-    this.hashids = new Hashids(env.APP_KEY, 15, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    this.hashing = hashing;
   }
+
+  // TODO - this only needs to happen when it goes to json
+  // protected protected = ['id', 'password']
 
   protected computed = {
     code: (room) => {
-      return this.hashids
-        .encode(BigInt(room.id))
+      return this.hashing
+        .encodeAsHashId(room.id)
         .match(/.{1,5}/g)
         .join("-");
     },

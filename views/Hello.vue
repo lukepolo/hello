@@ -139,11 +139,9 @@ export default {
   },
   methods: {
     startMeeting() {
-      this.$store
-        .dispatch("room/startMeeting", this.form.data())
-        .then((room) => {
-          this.navigateToRoom(room.code);
-        });
+      this.$store.dispatch("room/create", this.form.data()).then(({ data }) => {
+        this.navigateToRoom(data.code);
+      });
     },
     goToRoom() {
       this.navigateToRoom(this.form.roomCode);

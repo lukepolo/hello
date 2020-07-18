@@ -24,15 +24,26 @@ export default class RoomRoutes extends Router {
     this.roomModel = roomModel;
   }
 
-  @Post("/join")
+  @Post("/:roomCode")
   public async get(request: Request) {
     let password = request.body.password;
     if (!password) {
       throw new RouteError(422, "Room requires a password.");
     }
 
-    let room = await this.roomModel.where("id", "=", 76397147779502080).find();
-    if (password && this.hashing.verify(password, room.password)) {
+    let roomCode = this.hashing.decodeHashId(
+      request.params.roomCode.replace(/-/g, ""),
+    );
+
+    let room = await this.roomModel
+      .where("id", "=", roomCode.toString())
+      .find();
+
+    if (!room) {
+      throw new RouteError(404, "Cannot find room.");
+    }
+
+    if (this.hashing.verify(password, room.password)) {
       return room;
     }
 

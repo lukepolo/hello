@@ -4,8 +4,16 @@ import { RoomState } from "./stateInterface";
 
 export default function(httpService) {
   return {
-    startMeeting: (context: ActionContext<RoomState, RootState>, data) => {
-      return httpService.post("/rooms", data);
+    get: async (
+      context: ActionContext<RoomState, RootState>,
+      { roomCode, password },
+    ) => {
+      return await httpService.post(`/rooms/${roomCode}`, {
+        password,
+      });
+    },
+    create: async (context: ActionContext<RoomState, RootState>, data) => {
+      return await httpService.post("/rooms", data);
     },
   };
 }

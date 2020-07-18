@@ -11,6 +11,7 @@ export const Table = (table: string = ""): ClassDecorator => {
 @injectable()
 export default class Model<T> {
   protected computed;
+  protected protected;
   protected table: string;
   protected db: DatabaseConnection;
 
@@ -50,6 +51,12 @@ export default class Model<T> {
       for (let field in this.computed) {
         model[field] = this.computed[field](model);
       }
+    }
+
+    if (this.protected) {
+      this.protected.forEach((field) => {
+        delete model[field];
+      });
     }
 
     return model;
