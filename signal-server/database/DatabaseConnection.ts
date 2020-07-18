@@ -30,9 +30,7 @@ export default class DatabaseConnection {
       authProvider,
       keyspace: this.env.DB_KEYSPACE,
       localDataCenter: this.env.DB_DATACENTER,
-      contactPoints: this.env.DB_HOSTS.split(",").filter(
-        (host) => host.trim() != "",
-      ),
+      contactPoints: JSON.parse(this.env.DB_HOSTS),
       protocolOptions: {
         port: this.env.DB_PORT || 9042,
       },

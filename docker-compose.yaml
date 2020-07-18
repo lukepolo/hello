@@ -1,7 +1,12 @@
-version: '2'
+version: '3'
 
 services:
   cassandra:
     image: 'bitnami/cassandra:latest'
     ports:
     - 9042:9042
+  coturn:
+    image: 'instrumentisto/coturn:latest'
+    command:
+      - --external-ip=$$(detect-external-ip)
+    network_mode: host
