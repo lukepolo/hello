@@ -10,6 +10,7 @@ export const Table = (table: string = ""): ClassDecorator => {
 
 @injectable()
 export default class Model<T> {
+  protected computed;
   protected table: string;
   protected db: DatabaseConnection;
 
@@ -24,8 +25,34 @@ export default class Model<T> {
     this.table = Reflect.getMetadata("table", this.constructor);
   }
 
+  async get(): Promise<Array<T>> {
+    let { query, bindings } = this.buildGetQuery();
+    let results = await this.db.query(query, bindings);
+    return results.map((model) => {
+      return this._computeFields(model);
+    });
+  }
+
   async create(data: T) {
-    return this.db.insert(this.table, data);
+    return this._computeFields(await this.db.insert(this.table, data));
+  }
+
+  async find(): Promise<T> {
+    let { query, bindings } = this.buildGetQuery();
+    let results = await this.db.query(query, bindings, 1);
+    if (results.length > 0) {
+      return this._computeFields(results[0]);
+    }
+  }
+
+  private async _computeFields(model: T): Promise<T> {
+    if (this.computed) {
+      for (let field in this.computed) {
+        model[field] = this.computed[field](model);
+      }
+    }
+
+    return model;
   }
 
   public where(column, operator, value) {
@@ -35,20 +62,6 @@ export default class Model<T> {
       value,
     });
     return this;
-  }
-
-  async get(): Promise<Array<T>> {
-    let { query, bindings } = this.buildGetQuery();
-    return this.db.query(query, bindings);
-  }
-
-  async find(): Promise<T> {
-    let { query, bindings } = this.buildGetQuery();
-    let results = await this.db.query(query, bindings, 1);
-
-    if (results.length > 0) {
-      return results[0];
-    }
   }
 
   private buildGetQuery(): {

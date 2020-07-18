@@ -50,7 +50,9 @@ export default class DatabaseConnection {
   }
 
   public async insert(table: string, data) {
-    data.id = this.idGenerator.generate();
+    if (!data.id) {
+      data.id = this.idGenerator.generate();
+    }
     return this.client
       .execute(`INSERT INTO ${table} JSON ?`, [JSON.stringify(data)], {
         prepare: true,

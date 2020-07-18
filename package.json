@@ -15,7 +15,7 @@
     "signal-server:watch": "rimraf dist/signal-server && concurrently \"npm run signal-server:build -- -w\" \"wait-on dist/signal-server/signal-server.js && nodemon --watch dist/signal-server dist/signal-server/signal-server.js\" ",
     "signal-server:run": "npm run signal-server:build && node dist/signal-server/signal-server.js",
     "rebuild": "electron-rebuild",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps && cp -n .env.example .env && node signal-server/scripts/gen-key.js"
   },
   "build": {
     "appId": "your.id",
@@ -28,8 +28,10 @@
     "body-parser": "^1.19.0",
     "cassandra-driver": "^4.5.2",
     "deepmerge": "^4.2.2",
+    "dotenv-manipulator": "^2.1.1",
     "electron-debug": "^3.1.0",
     "events": "^3.1.0",
+    "hashids": "^2.2.1",
     "native-addon-loader": "^2.0.1",
     "robotjs": "^0.6.0",
     "snowflake-id": "^1.1.0",
