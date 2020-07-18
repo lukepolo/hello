@@ -1,30 +1,41 @@
 import fs from "fs";
 import path from "path";
 import Snowflake from "snowflake-id";
-import { injectable } from "inversify";
 import cassandra from "cassandra-driver";
+import Bindings from "../constants/Bindings";
+import { inject, injectable } from "inversify";
 
 @injectable()
 export default class DatabaseConnection {
-  private client;
-  private idGenerator;
+  private env;
 
-  constructor() {
-    this.idGenerator = new Snowflake({
-      // Make as small as possible to start out with
-      offset: (2020 - 1970) * 31536000 * 1000,
-    });
+  protected client;
+  protected idGenerator = new Snowflake({
+    // Make as small as possible to start out with
+    offset: (2020 - 1970) * 31536000 * 1000,
+  });
 
+  constructor(@inject(Bindings.ENV) env) {
+    this.env = env;
+    this.createClient();
+  }
+
+  private createClient() {
     const authProvider = new cassandra.auth.PlainTextAuthProvider(
-      "cassandra",
-      "cassandra",
+      this.env.DB_USERNAME,
+      this.env.DB_PASSWORD,
     );
 
     this.client = new cassandra.Client({
       authProvider,
-      contactPoints: ["127.0.0.1"],
-      keyspace: "hello",
-      localDataCenter: "datacenter1",
+      keyspace: this.env.DB_KEYSPACE,
+      localDataCenter: this.env.DB_DATACENTER,
+      contactPoints: this.env.DB_HOSTS.split(",").filter(
+        (host) => host.trim() != "",
+      ),
+      protocolOptions: {
+        port: this.env.DB_PORT || 9042,
+      },
     });
   }
 
