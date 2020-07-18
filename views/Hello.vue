@@ -141,7 +141,6 @@ export default {
     startMeeting() {},
     goToRoom() {
       localStorage.setItem("name", this.form.name);
-
       // TODO - check if room exists
 
       this.$router.push({
