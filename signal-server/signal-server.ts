@@ -13,7 +13,7 @@ import RtcPeerConnectionSocketEvents from "./socket-events/RtcPeerConnectionSock
 
 const port = process.env.PORT || 3000;
 
-class App {
+class SignalServer {
   protected app;
 
   constructor() {
@@ -65,4 +65,4 @@ class App {
   }
 }
 
-new App();
+new SignalServer();

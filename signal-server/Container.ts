@@ -1,6 +1,11 @@
+import cors from "cors";
 import dotenv from "dotenv";
+import Hashing from "./Hashing";
+import BodyParser from "body-parser";
 import { Container } from "inversify";
+import cookieParser from "cookie-parser";
 import express, { Express } from "express";
+import RoomModel from "./models/RoomModel";
 import Bindings from "./constants/Bindings";
 import RoomRoutes from "./routes/RoomRoutes";
 import MessageModel from "./models/MessageModel";
@@ -11,15 +16,11 @@ import RoomSocketEvents from "./socket-events/RoomSocketEvents";
 import ChatSocketEvents from "./socket-events/ChatSocketEvents";
 import RemoteControlSocketEvents from "./socket-events/RemoteControlSocketEvents";
 import RtcPeerConnectionSocketEvents from "./socket-events/RtcPeerConnectionSocketEvents";
-import RoomModel from "./models/RoomModel";
-import BodyParser from "body-parser";
-import Hashing from "./Hashing";
-import cors from "cors";
-import cookieParser from "cookie-parser";
 
 const container = new Container();
 
 let env = dotenv.config().parsed;
+
 container.bind(Bindings.ENV).toConstantValue(env);
 container.bind<Hashing>(Bindings.Hashing).to(Hashing);
 
