@@ -138,15 +138,22 @@ export default {
     this.name = localStorage.getItem("name");
   },
   methods: {
-    startMeeting() {},
+    startMeeting() {
+      this.$store
+        .dispatch("room/startMeeting", this.form.data())
+        .then((room) => {
+          this.navigateToRoom(room.code);
+        });
+    },
     goToRoom() {
+      this.navigateToRoom(this.form.roomCode);
+    },
+    navigateToRoom(roomCode) {
       localStorage.setItem("name", this.form.name);
-      // TODO - check if room exists
-
       this.$router.push({
         name: "room",
         params: {
-          roomCode: this.form.roomCode,
+          roomCode,
         },
       });
     },

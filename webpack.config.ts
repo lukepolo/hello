@@ -69,6 +69,7 @@ export default function({ mode, platform }) {
         iceServers: env.ICE_SERVERS,
       },
       app: {
+        host: env.API_HOST,
         platform,
       },
     })

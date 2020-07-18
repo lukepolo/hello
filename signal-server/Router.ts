@@ -82,7 +82,9 @@ export default class Router {
           }
           return response.json(await this[route.methodName](request));
         } catch ({ status, message }) {
-          return response.status(status || 500).send(message);
+          return response.status(status || 500).json({
+            error: message,
+          });
         }
       });
     });

@@ -14,10 +14,12 @@ import RtcPeerConnectionSocketEvents from "./socket-events/RtcPeerConnectionSock
 import RoomModel from "./models/RoomModel";
 import BodyParser from "body-parser";
 import Hashing from "./Hashing";
+import cors from "cors";
 
 const container = new Container();
 
-container.bind(Bindings.ENV).toConstantValue(dotenv.config().parsed);
+let env = dotenv.config().parsed;
+container.bind(Bindings.ENV).toConstantValue(env);
 container.bind<Hashing>(Bindings.Hashing).to(Hashing);
 
 container
@@ -43,6 +45,10 @@ container.bind<RoomModel>(Bindings.Models.Room).to(RoomModel);
 container.bind<MessageModel>(Bindings.Models.Message).to(MessageModel);
 
 const app = express();
+
+if (env.APP_ENV === "local") {
+  app.use(cors());
+}
 
 app.use(BodyParser.json());
 

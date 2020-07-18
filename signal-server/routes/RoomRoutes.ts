@@ -28,12 +28,16 @@ export default class RoomRoutes extends Router {
   public async get(request: Request) {
     let password = request.body.password;
     if (!password) {
-      throw new RouteError(401, "Room requires a password");
+      throw new RouteError(422, "Room requires a password.");
     }
 
     let room = await this.roomModel.where("id", "=", 76397147779502080).find();
     if (password && this.hashing.verify(password, room.password)) {
       return room;
+    }
+
+    if (!password) {
+      throw new RouteError(401, "Invalid Password.");
     }
   }
 
@@ -41,7 +45,7 @@ export default class RoomRoutes extends Router {
   public async post(request: Request) {
     let password = request.body.password;
     if (!password) {
-      throw new RouteError(401, "Room requires a password");
+      throw new RouteError(422, "Room requires a password");
     }
 
     return this.roomModel.create({
