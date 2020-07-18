@@ -37,10 +37,16 @@ export default class DatabaseConnection {
     });
   }
 
-  public async query(query: string, ...params: Array<string>) {
-    return await this.client.execute(query, params).then((results) => {
-      return results.rows;
-    });
+  public async query(query: string, params: Array<any>, limit?: number) {
+    return await this.client
+      .execute(
+        `select * from rooms where id = ? ${limit ? `limit ${limit}` : ""}`,
+        params,
+        { prepare: true },
+      )
+      .then((results) => {
+        return results.rows;
+      });
   }
 
   public async insert(table: string, data) {
@@ -56,7 +62,7 @@ export default class DatabaseConnection {
 
   public migrationPath = "signal-server/database/migrations";
 
-  public async migrate() {
+  public async migrate(): Promise<void> {
     // TODO - super crude , we can make it better
     let migrations = this.getMigrations();
     for (let migrationIndex in migrations) {

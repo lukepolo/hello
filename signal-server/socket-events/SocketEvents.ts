@@ -14,13 +14,8 @@ declare module "socket.io" {
 export default abstract class SocketEvents {
   protected socketServer: Server;
   protected _socket: Socket;
-  protected database: DatabaseConnection;
 
-  constructor(
-    @inject(Bindings.Database) database,
-    @inject(Bindings.SocketServer) socketServer,
-  ) {
-    this.database = database;
+  constructor(@inject(Bindings.SocketServer) socketServer) {
     this.socketServer = socketServer;
   }
 

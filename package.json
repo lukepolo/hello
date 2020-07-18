@@ -12,7 +12,7 @@
     "dev-server": "cross-env TS_NODE_PROJECT=\"node_modules/varie-bundler/webpack-tsconfig.json\" webpack-dev-server --env.mode=development --progress --hot",
     "build": "cross-env TS_NODE_PROJECT=\"node_modules/varie-bundler/webpack-tsconfig.json\" webpack --env.mode=production --no-progress --hide-modules",
     "signal-server:build": "tsc --p tsconfig-signal-server.json",
-    "signal-server:watch": "concurrently \"tsc --p tsconfig-signal-server.json -w\" \"nodemon --watch dist/signal-server.js dist/signal-server/signal-server.js\" ",
+    "signal-server:watch": "concurrently \"tsc --p tsconfig-signal-server.json -w\" \"nodemon --watch dist/signal-server dist/signal-server/signal-server.js\" ",
     "signal-server:run": "npm run signal-server:build && node dist/signal-server/signal-server.js",
     "rebuild": "electron-rebuild",
     "postinstall": "electron-builder install-app-deps"
@@ -24,6 +24,8 @@
     }
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
     "cassandra-driver": "^4.5.2",
     "deepmerge": "^4.2.2",
     "electron-debug": "^3.1.0",
