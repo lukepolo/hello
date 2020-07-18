@@ -12,7 +12,7 @@
     "dev-server": "cross-env TS_NODE_PROJECT=\"node_modules/varie-bundler/webpack-tsconfig.json\" webpack-dev-server --env.mode=development --progress --hot",
     "build": "cross-env TS_NODE_PROJECT=\"node_modules/varie-bundler/webpack-tsconfig.json\" webpack --env.mode=production --no-progress --hide-modules",
     "signal-server:build": "tsc --p tsconfig-signal-server.json",
-    "signal-server:watch": "concurrently \"tsc --p tsconfig-signal-server.json -w\" \"nodemon --watch dist/signal-server dist/signal-server/signal-server.js\" ",
+    "signal-server:watch": "rimraf dist/signal-server && concurrently \"npm run signal-server:build -- -w\" \"wait-on dist/signal-server/signal-server.js && nodemon --watch dist/signal-server dist/signal-server/signal-server.js\" ",
     "signal-server:run": "npm run signal-server:build && node dist/signal-server/signal-server.js",
     "rebuild": "electron-rebuild",
     "postinstall": "electron-builder install-app-deps"
@@ -56,6 +56,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^6.2.2",
     "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
     "source-map-support": "^0.5.19",
     "varie-bundler": "^2.0.5",
     "vue-template-compiler": "^2.6.0",
