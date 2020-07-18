@@ -16,9 +16,6 @@ export default class RoomModel extends Model<Room> {
     this.hashing = hashing;
   }
 
-  // TODO - this only needs to happen when it goes to json
-  // protected protected = ['id', 'password']
-
   protected computed = {
     code: (room) => {
       return this.hashing

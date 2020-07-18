@@ -15,6 +15,7 @@ import RoomModel from "./models/RoomModel";
 import BodyParser from "body-parser";
 import Hashing from "./Hashing";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const container = new Container();
 
@@ -47,9 +48,14 @@ container.bind<MessageModel>(Bindings.Models.Message).to(MessageModel);
 const app = express();
 
 if (env.APP_ENV === "local") {
-  app.use(cors());
+  app.use(
+    cors({
+      origin: "http://localhost:8080",
+      credentials: true,
+    }),
+  );
 }
-
+app.use(cookieParser());
 app.use(BodyParser.json());
 
 const http = new httpServer.Server(app);

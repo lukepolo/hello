@@ -1,5 +1,5 @@
 import Hashing from "../Hashing";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { inject } from "inversify";
 import RoomModel from "../models/RoomModel";
 import Bindings from "../constants/Bindings";
@@ -25,31 +25,47 @@ export default class RoomRoutes extends Router {
   }
 
   @Post("/:roomCode")
-  public async get(request: Request) {
+  public async get(request: Request, response: Response) {
+    let roomCode = request.params.roomCode;
+
+    // TODO - when they create the room we should set the cookie too
+    if (request.cookies[roomCode]) {
+      let room = await this.roomModel
+        .where("id", "=", request.cookies[roomCode])
+        .find();
+
+      if (room) {
+        return room;
+      }
+      request.cookies.remove(roomCode);
+    }
+
     let password = request.body.password;
     if (!password) {
       throw new RouteError(422, "Room requires a password.");
     }
+    let parsedRoomCode = this.hashing
+      .decodeHashId(roomCode.replace(/-/g, ""))
+      .toString();
 
-    let roomCode = this.hashing.decodeHashId(
-      request.params.roomCode.replace(/-/g, ""),
-    );
-
-    let room = await this.roomModel
-      .where("id", "=", roomCode.toString())
-      .find();
+    let room = await this.roomModel.where("id", "=", parsedRoomCode).find();
 
     if (!room) {
       throw new RouteError(404, "Cannot find room.");
     }
 
     if (this.hashing.verify(password, room.password)) {
+      response.cookie(roomCode, room.id, {
+        httpOnly: true,
+        domain: "localhost",
+      });
+      delete room.id;
+      delete room.password;
+
       return room;
     }
 
-    if (!password) {
-      throw new RouteError(401, "Invalid Password.");
-    }
+    throw new RouteError(401, "Invalid Password.");
   }
 
   @Post("/")
@@ -59,9 +75,14 @@ export default class RoomRoutes extends Router {
       throw new RouteError(422, "Room requires a password");
     }
 
-    return this.roomModel.create({
+    let room = await this.roomModel.create({
       name: request.body.name || new Date().toISOString(),
       password: this.hashing.create(password),
     });
+
+    delete room.id;
+    delete room.password;
+
+    return room;
   }
 }

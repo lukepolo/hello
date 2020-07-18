@@ -15,6 +15,7 @@ export default class SetApiHost implements HttpMiddlewareInterface {
       return config;
     }
 
+    config.withCredentials = true;
     config.url =
       this.configService.get("app.host") +
       `/api/${config.url}`.replace(/\/+/g, "/");
