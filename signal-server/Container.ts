@@ -47,10 +47,13 @@ container.bind<MessageModel>(Bindings.Models.Message).to(MessageModel);
 
 const app = express();
 
-if (env.APP_ENV === "local") {
+if (env.CORS_ORIGINS) {
+  let origins = JSON.parse(env.CORS_ORIGINS).map((origin) => {
+    return new RegExp(origin);
+  });
   app.use(
     cors({
-      origin: "http://localhost:8080",
+      origin: origins,
       credentials: true,
     }),
   );

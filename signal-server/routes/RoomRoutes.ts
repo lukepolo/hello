@@ -28,7 +28,6 @@ export default class RoomRoutes extends Router {
   public async get(request: Request, response: Response) {
     let roomCode = request.params.roomCode;
 
-    // TODO - when they create the room we should set the cookie too
     if (request.cookies[roomCode]) {
       let room = await this.roomModel
         .where("id", "=", request.cookies[roomCode])
@@ -37,7 +36,6 @@ export default class RoomRoutes extends Router {
       if (room) {
         return room;
       }
-      request.cookies.remove(roomCode);
     }
 
     let password = request.body.password;
@@ -69,7 +67,7 @@ export default class RoomRoutes extends Router {
   }
 
   @Post("/")
-  public async post(request: Request) {
+  public async post(request: Request, response: Response) {
     let password = request.body.password;
     if (!password) {
       throw new RouteError(422, "Room requires a password");
@@ -80,8 +78,14 @@ export default class RoomRoutes extends Router {
       password: this.hashing.create(password),
     });
 
-    delete room.id;
     delete room.password;
+
+    response.cookie(room.code, room.id, {
+      httpOnly: true,
+      domain: "localhost",
+    });
+
+    delete room.id;
 
     return room;
   }
