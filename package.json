@@ -15,7 +15,7 @@
     "signal-server:watch": "rimraf dist/signal-server && concurrently \"npm run signal-server:build -- -w\" \"wait-on dist/signal-server/signal-server.js && nodemon --watch dist/signal-server dist/signal-server/signal-server.js\" ",
     "signal-server:run": "npm run signal-server:build && node dist/signal-server/signal-server.js",
     "rebuild": "electron-rebuild",
-    "postinstall": "electron-builder install-app-deps && cp -n .env.example .env && node signal-server/scripts/gen-key.js"
+    "postinstall": "electron-builder install-app-deps && cp -n .env.example .env && node signal-server/scripts/generate-app-key.js"
   },
   "build": {
     "appId": "your.id",
