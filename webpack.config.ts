@@ -47,7 +47,10 @@ export default function({ mode, platform }) {
     vue: {
       runtimeOnly: false,
     },
-    outputPath: path.join(__dirname, "dist/renderer"),
+    outputPath:
+      platform === "web"
+        ? path.join(__dirname, "public")
+        : path.join(__dirname, "dist/renderer"),
   })
     .entry("renderer", ["app/app.ts", "resources/sass/app.scss"])
     .aliases({

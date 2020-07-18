@@ -1,4 +1,4 @@
 .env
 dist
-dist-signal-server
+public
 node_modules
