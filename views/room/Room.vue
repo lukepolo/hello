@@ -94,7 +94,6 @@ export default {
     this.$store
       .dispatch("room/get", {
         roomCode: this.roomCode,
-        password: "connectme",
       })
       .catch(() => {
         this.$router.push("/");
