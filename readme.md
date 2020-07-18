@@ -16,7 +16,7 @@ A fun project to use WebRTC and to use some different technologies.
 ### Peer Connections
 
 - [x] Peer to Peer Connections
-- [ ] COTURN Server
+- [x] COTURN Server
 
 ### Video / Camera
 
@@ -72,7 +72,7 @@ A fun project to use WebRTC and to use some different technologies.
 
 ### Bundling
 
-- [ ] Web
+- [x] Web
 - [ ] OSX
 - [ ] Linux
 - [ ] Windows
@@ -83,6 +83,11 @@ A fun project to use WebRTC and to use some different technologies.
 - [ ] Participants
 - [ ] Participant Activity
 - [ ] Meeting Summary
+
+### DevOps
+
+- [ ] Docker Compose File to Launch
+- [ ] Wiki for Running Docker Compose / Adding SSL Certs
 
 ## Known Bugs
 
