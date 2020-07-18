@@ -19,8 +19,10 @@ export default class RoutingServiceProvider extends ServiceProvider {
 
   public async register() {
     super.register();
-
-    // ...
+    $config.set(
+      "router.mode",
+      $config.get("app.platform") === "web" ? "history" : "hash",
+    );
   }
 
   map() {

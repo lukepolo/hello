@@ -16,11 +16,21 @@
           <label>
             Room Code:
           </label>
-          <input type="text" value="default-room" v-model="roomCode" />
+          <input type="text" v-model="form.roomCode" />
+        </div>
+
+        <div class="form--item">
+          <label>
+            Password:
+          </label>
+          <input type="password" v-model="form.password" />
         </div>
 
         <div class="form--buttons">
           <button class="btn btn-primary" @click="goToRoom">Join Room</button>
+          <button class="btn btn-primary" @click="startMeeting">
+            Start a Meeting
+          </button>
         </div>
       </div>
     </div>
@@ -113,20 +123,35 @@
 export default {
   data() {
     return {
-      name: "",
-      roomCode: "default-room",
+      form: this.createForm({
+        name: "",
+        roomCode: "",
+      }).validation({
+        rules: {
+          name: "required",
+          roomCode: "required",
+        },
+      }),
     };
   },
   created() {
     this.name = localStorage.getItem("name");
   },
   methods: {
+    startMeeting() {
+      this.$store.dispatch("room/create", this.form.data()).then(({ data }) => {
+        this.navigateToRoom(data.code);
+      });
+    },
     goToRoom() {
-      localStorage.setItem("name", this.name);
+      this.navigateToRoom(this.form.roomCode);
+    },
+    navigateToRoom(roomCode) {
+      localStorage.setItem("name", this.form.name);
       this.$router.push({
         name: "room",
         params: {
-          roomCode: this.roomCode,
+          roomCode,
         },
       });
     },

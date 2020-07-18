@@ -1,3 +1,4 @@
+import RoomStore from "@store/room/RoomStore";
 import { StateServiceProvider as ServiceProvider } from "varie";
 import StateServiceInterface from "varie/lib/state/StateServiceInterface";
 
@@ -23,6 +24,6 @@ export default class StateServiceProvider extends ServiceProvider {
   }
 
   public map() {
-    // this.$store.registerStore(...);
+    this.$store.registerStore(RoomStore);
   }
 }

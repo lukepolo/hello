@@ -61,6 +61,13 @@ import StreamControls from "./components/StreamControls";
 import { DeviceTypes } from "@app/constants/DeviceTypes";
 
 export default {
+  $inject: [
+    "DeviceService",
+    "DummyCaptureService",
+    "CameraCaptureService",
+    "RoomStreamingService",
+    "MicrophoneCaptureService",
+  ],
   components: {
     RoomChat,
     Presenter,
@@ -83,13 +90,15 @@ export default {
       showingPresenterView: false,
     };
   },
-  $inject: [
-    "DeviceService",
-    "DummyCaptureService",
-    "CameraCaptureService",
-    "RoomStreamingService",
-    "MicrophoneCaptureService",
-  ],
+  created() {
+    this.$store
+      .dispatch("room/get", {
+        roomCode: this.roomCode,
+      })
+      .catch(() => {
+        this.$router.push("/");
+      });
+  },
   mounted() {
     this.roomStreamingService
       .setup(this.roomCode, {

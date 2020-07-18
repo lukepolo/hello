@@ -78,11 +78,13 @@ export default class Router {
       app[route.method](path, async (request: Request, response: Response) => {
         try {
           if (this[route.methodName]! instanceof Promise) {
-            return response.json(this[route.methodName](request));
+            return response.json(this[route.methodName](request, response));
           }
-          return response.json(await this[route.methodName](request));
+          return response.json(await this[route.methodName](request, response));
         } catch ({ status, message }) {
-          return response.status(status || 500).send(message);
+          return response.status(status || 500).json({
+            error: message,
+          });
         }
       });
     });

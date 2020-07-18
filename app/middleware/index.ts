@@ -1,3 +1,3 @@
-import LoadingScreen from "./LoadingScreen";
+import SetApiHost from "@app/middleware/SetApiHost";
 
-export default [LoadingScreen];
+export default [SetApiHost];

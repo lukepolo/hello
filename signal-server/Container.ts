@@ -14,10 +14,13 @@ import RtcPeerConnectionSocketEvents from "./socket-events/RtcPeerConnectionSock
 import RoomModel from "./models/RoomModel";
 import BodyParser from "body-parser";
 import Hashing from "./Hashing";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const container = new Container();
 
-container.bind(Bindings.ENV).toConstantValue(dotenv.config().parsed);
+let env = dotenv.config().parsed;
+container.bind(Bindings.ENV).toConstantValue(env);
 container.bind<Hashing>(Bindings.Hashing).to(Hashing);
 
 container
@@ -44,6 +47,18 @@ container.bind<MessageModel>(Bindings.Models.Message).to(MessageModel);
 
 const app = express();
 
+if (env.CORS_ORIGINS) {
+  let origins = JSON.parse(env.CORS_ORIGINS).map((origin) => {
+    return new RegExp(origin);
+  });
+  app.use(
+    cors({
+      origin: origins,
+      credentials: true,
+    }),
+  );
+}
+app.use(cookieParser());
 app.use(BodyParser.json());
 
 const http = new httpServer.Server(app);
