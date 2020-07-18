@@ -35,7 +35,7 @@ A fun project to use WebRTC and to use some different technologies.
 - [ ] Spotlight Layout
 - [ ] Basic List of Users in Room
 - [ ] Switch Room
-- [ ] Password Protected
+- [x] Password Protected
 - [ ] Show Only Video Users First
 - [ ] URL Generator w/ Password
 - [ ] Calendar Integration
