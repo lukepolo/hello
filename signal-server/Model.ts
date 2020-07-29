@@ -8,8 +8,12 @@ export const Table = (table: string = ""): ClassDecorator => {
   };
 };
 
+interface Entity {
+  id?: BigInt;
+}
+
 @injectable()
-export default class Model<T> {
+export default class Model<T extends Entity> {
   protected computed;
   protected table: string;
   protected db: DatabaseConnection;
@@ -35,6 +39,21 @@ export default class Model<T> {
 
   async create(data: T) {
     return this._computeFields(await this.db.insert(this.table, data));
+  }
+
+  async update(data: T) {
+    let updateData = Object.assign({}, data);
+    if (!updateData.id) {
+      throw new Error("Model must have an id.");
+    }
+
+    for (let field in this.computed) {
+      delete updateData[field];
+    }
+
+    await this.db.update(this.table, updateData);
+
+    return data;
   }
 
   async find(): Promise<T> {

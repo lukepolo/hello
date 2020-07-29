@@ -62,6 +62,28 @@ export default class DatabaseConnection {
       });
   }
 
+  public async update(table: string, data) {
+    let fieldsSetQuery = "";
+    let values = [data.id];
+    delete data.id;
+
+    for (let field in data) {
+      if (typeof data[field] !== "function") {
+        values.unshift(data[field]);
+        fieldsSetQuery = `${field} = ?, ${fieldsSetQuery}`;
+      }
+    }
+
+    let sql = `UPDATE ${table} SET ${fieldsSetQuery.replace(
+      /,\s*$/,
+      "",
+    )} WHERE id = ?`;
+
+    return await this.client.execute(sql, values, {
+      prepare: true,
+    });
+  }
+
   public migrationPath = "signal-server/database/migrations";
 
   public async migrate(): Promise<void> {
