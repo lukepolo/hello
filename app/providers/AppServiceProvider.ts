@@ -7,7 +7,7 @@ import DummyCaptureService from "@app/services/DummyCaptureService";
 import CameraCaptureService from "@app/services/CameraCaptureService";
 import RoomStreamingService from "@app/services/RoomStreamingService";
 import DesktopCaptureService from "@app/services/DesktopCaptureService";
-import OperationSystemService from "@app/services/OperationSystemService";
+import OperatingSystemService from "@app/services/OperatingSystemService";
 import MicrophoneCaptureService from "@app/services/MicrophoneCaptureService";
 
 /*
@@ -31,7 +31,7 @@ export default class AppProviderServiceProvider extends ServiceProvider {
 
     // OS SERVICES
     this.app.bind("DeviceService", DeviceService);
-    this.app.bind("OperationSystemService", OperationSystemService);
+    this.app.bind("OperatingSystemService", OperatingSystemService);
 
     // STREAMING SERVICES
     this.app.bind("StreamController", StreamController);

@@ -9,7 +9,7 @@ declare module "*.vue" {
   import RemoteControlService from "@app/services/RemoteControlService";
   import RoomStreamingService from "@app/services/RoomStreamingService";
   import DesktopCaptureService from "@app/services/DesktopCaptureService";
-  import OperationSystemService from "@app/services/OperationSystemService";
+  import OperatingSystemService from "@app/services/OperationSystemService";
   import MicrophoneCaptureService from "@app/services/MicrophoneCaptureService";
 
   const broadcastService: BroadcastService;
@@ -19,7 +19,7 @@ declare module "*.vue" {
 
   // OS SERVICES
   const deviceService: DeviceService;
-  const operationSystemService: OperationSystemService;
+  const operationSystemService: OperatingSystemService;
 
   // STREAMING SERVICES
   const streamController: StreamController;

@@ -22,8 +22,8 @@ enum PLATFORM_NAMES {
 }
 
 @injectable()
-export default class OperationSystemService {
-  public getOS(): PLATFORM_NAMES {
+export default class OperatingSystemService {
+  public getOS(): PLATFORMS {
     return PLATFORM_NAMES[os.platform()];
   }
 }

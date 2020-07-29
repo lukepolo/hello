@@ -1,17 +1,17 @@
 import { inject, injectable } from "inversify";
 import { DesktopCapturerSource } from "electron";
 import { DesktopSources } from "@app/types/DesktopSources";
-import { PLATFORMS } from "@app/services/OperationSystemService";
+import OperatingSystemService, { PLATFORMS } from "@app/services/OperatingSystemService";
 
 // TODO - ask for permissions
 // https://www.electronjs.org/docs/api/system-preferences#systempreferencesgetmediaaccessstatusmediatype-macos
 
 @injectable()
 export default class DesktopCaptureService {
-  private operationSystemService;
+  private operatingSystemService : OperatingSystemService;
 
-  constructor(@inject("OperationSystemService") operationSystemService) {
-    this.operationSystemService = operationSystemService;
+  constructor(@inject("OperatingSystemService") operatingSystemService) {
+    this.operatingSystemService = operatingSystemService;
   }
 
   public getSources(
@@ -55,7 +55,7 @@ export default class DesktopCaptureService {
   public capture(videoElement, source: DesktopCapturerSource, audio = true) {
     // https://www.electronjs.org/docs/api/desktop-capturer#caveats
     // OSX - cannot capture audio
-    if (PLATFORMS.MAC === this.operationSystemService.getOS()) {
+    if (PLATFORMS.MAC === this.operatingSystemService.getOS()) {
       audio = false;
     }
 
