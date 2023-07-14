@@ -62,7 +62,7 @@
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.19",
-    "varie-bundler": "^2.0.5",
+    "varie-bundler": "^3.0.4",
     "vue-template-compiler": "^2.6.0",
     "wait-on": "^5.0.1"
   },
